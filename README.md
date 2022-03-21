@@ -4,4 +4,5 @@ Application de gestion d'enregistrement des utilisateurs
 - Spring Boot 
 - Spring Webflux
 - Spring Data R2DBC
+- Lombok
 - Junit 5
