@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "app.api.description",
+    "type": "java.lang.String",
+    "description": "Application API description"
+  },
+  {
+    "name": "app.api.version",
+    "type": "java.lang.String",
+    "description": "Application API version"
+  },
+  {
+    "name": "app.api.title",
+    "type": "java.lang.String",
+    "description": "Application API title"
+  },
+  {
+    "name": "app.api.latest-prefix-endpoint",
+    "type": "java.lang.String",
+    "description": "Latest prefix api endpoint"
+  }
+]}

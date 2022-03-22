@@ -1,2 +1,22 @@
+app:
+  api:
+    version: 1.0
+    title: User management API
+    description: ^project.description^
+    latest-prefix-endpoint: /api/v${app.api.version}
 server:
-  port: 9000
+  port: 9090
+  
+#logging:
+  #level:
+    #root: DEBUG
+  #error:
+    #include-message: always
+    #include-binding-errors: always
+springdoc:
+  #use-fqn: true
+  swagger-ui:
+    #path: /doc.html
+    show-extensions: true
+    show-common-extensions: true
+
