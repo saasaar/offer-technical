@@ -4,5 +4,8 @@ Application de gestion d'enregistrement des utilisateurs
 - Spring Boot 
 - Spring Webflux
 - Spring Data R2DBC
+- AOP
+- Reactor
 - Lombok
 - Junit 5
+- Open API (swagger)
