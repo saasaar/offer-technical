@@ -1,6 +1,7 @@
 package fr.example.technicaloffer.constraint.validation;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -22,6 +23,9 @@ public class GenderValidator implements ConstraintValidator<Gender, String> {
 
 	@Override
 	public boolean isValid(String gender, ConstraintValidatorContext context) {
+		if (Objects.isNull(gender)) {
+			return false;
+		}
 		return Arrays.asList(GenderEnum.values()).stream().map(GenderEnum::name)
 				.anyMatch(enumGender -> gender.strip().equals(enumGender));
 	}

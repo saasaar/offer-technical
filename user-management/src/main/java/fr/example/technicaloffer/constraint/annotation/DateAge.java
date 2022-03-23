@@ -13,7 +13,7 @@ import javax.validation.Payload;
 import fr.example.technicaloffer.constraint.validation.DateAgeValidator;
 
 /**
- * Validate that the age is between min and max included from a
+ * Validate that the age is greater than minAge included from a
  * {@link LocalDate}.
  * 
  * @author saad arkoubi
@@ -26,8 +26,6 @@ import fr.example.technicaloffer.constraint.validation.DateAgeValidator;
 public @interface DateAge {
 
 	int minAge() default 18;
-
-	int maxAge() default 150;
 
 	String message() default "{user.birthdate.age.message}";
 

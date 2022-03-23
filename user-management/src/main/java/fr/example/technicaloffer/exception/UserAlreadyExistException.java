@@ -6,15 +6,15 @@ package fr.example.technicaloffer.exception;
  * @author saad arkoubi
  *
  */
-public class UserNotFoundException extends RuntimeException {
+public class UserAlreadyExistException extends RuntimeException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public UserNotFoundException() {
-		super(UserNotFoundMessage.USER_NOT_FOUND);
+	public UserAlreadyExistException() {
+		super(UserNotFoundMessage.USER_ALREADY_EXIST);
 	}
 
 }

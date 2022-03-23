@@ -33,5 +33,5 @@ public @interface Gender {
 	/**
 	 * @return value the element must equal to
 	 */
-	GenderEnum[] values();
+	GenderEnum[] values() default { GenderEnum.MAN, GenderEnum.WOMEN };
 }

@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 
 import fr.example.technicaloffer.api.UserRequest;
 import fr.example.technicaloffer.api.UserResponse;
+import fr.example.technicaloffer.exception.UserAlreadyExistException;
 import fr.example.technicaloffer.exception.UserNotFoundException;
+import fr.example.technicaloffer.model.User;
 import fr.example.technicaloffer.repository.UserRepository;
 import fr.example.technicaloffer.service.UserService;
 import reactor.core.publisher.Mono;
@@ -21,7 +23,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Mono<UserResponse> registerUser(UserRequest userRequest) {
 		var user = UserMapper.toUser(userRequest);
-		return userRepository.save(user).map(UserMapper::toUserResponse);
+
+		return userRepository.findByUsername(userRequest.getUsername())
+				.flatMap(u -> Mono.error(UserAlreadyExistException::new))
+				.switchIfEmpty(Mono.defer(() -> userRepository.save(user))).cast(User.class)
+				.map(UserMapper::toUserResponse);
 	}
 
 	@Override

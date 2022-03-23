@@ -31,7 +31,7 @@ public @interface Country {
 	Class<? extends Payload>[] payload() default {};
 	
 	/**
-	 * @return value the element must equal to
+	 * @return values the element must equal to
 	 */
-	CountryEnum value();
+	CountryEnum[] values() default { CountryEnum.FRANCE };
 }

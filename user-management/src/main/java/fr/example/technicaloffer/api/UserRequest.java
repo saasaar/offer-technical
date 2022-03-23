@@ -37,7 +37,7 @@ public class UserRequest {
 	@DateAge(minAge = 18)
 	private LocalDate birthDate;
 
-	@Country(CountryEnum.FRANCE)
+	@Country(message = "{user.country.message}")
 	@NotBlank
 	private String country;
 
@@ -45,6 +45,6 @@ public class UserRequest {
 	@Size(max = 13)
 	private String phone;
 
-	@Gender(values = { GenderEnum.MAN, GenderEnum.WOMEN })
+	@Gender
 	private String gender;
 }

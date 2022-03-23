@@ -43,26 +43,25 @@ public class UserRestController {
 	}
 
 	@Operation(summary = "Get a user by its username")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Found the user", content = {
-					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponse.class)) }),
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Found the user", content = {
+			@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponse.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid username query supplied", content = {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ResponseError.class)) }),
 			@ApiResponse(responseCode = "404", description = "User not found", content = {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ResponseError.class)) }) })
 	@ResponseStatus(value = HttpStatus.OK)
 	@GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Mono<UserResponse> findUserByUsername(
-			@RequestParam @NotBlank(message = "username must not be empty or null") String username) {
+	public Mono<UserResponse> findUserByUsername(@RequestParam @NotBlank String username) {
 		return userService.findByUsername(username);
 	}
 
 	@Operation(summary = "Register a user")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "User registred", content = {
-					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponse.class)) }),
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "User registred", content = {
+			@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserResponse.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid user request", content = {
-					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ResponseError.class)) }) })
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ResponseError.class)) }),
+			@ApiResponse(responseCode = "409", description = "User already exist", content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ResponseError.class)) })})
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping(path = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<UserResponse> registerUser(@Valid @RequestBody UserRequest userRequest) {

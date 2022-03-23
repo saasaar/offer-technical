@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "30bd739f-1a5d-4641-b904-621521020338",
+		"name": "User management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Find user by username KO - invalid query param",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1.0/users?username=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1.0",
+						"users"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find user by username KO - user not found",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1.0/users?username=toto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1.0",
+						"users"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "toto"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find user by username OK",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1.0/users?username=fake",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1.0",
+						"users"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "fake"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user OK",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"fake\",\r\n  \"country\": \"FRANCE\",\r\n  \"phone\": \"0658042328\",\r\n  \"gender\": \"MAN\",\r\n  \"birth_date\": \"2000-03-22\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1.0/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1.0",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user KO - bad request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"\",\r\n  \"country\": \"FRANC\",\r\n  \"phone\": \"065804232\",\r\n  \"gender\": \"ME\",\r\n  \"birth_date\": \"2020-03-22\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1.0/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1.0",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

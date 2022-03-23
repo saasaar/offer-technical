@@ -6,6 +6,8 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -14,10 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import fr.example.technicaloffer.api.CountryEnum;
@@ -29,6 +33,7 @@ import fr.example.technicaloffer.api.UserRequest;
 import fr.example.technicaloffer.api.UserResponse;
 import fr.example.technicaloffer.exception.UserNotFoundException;
 import fr.example.technicaloffer.exception.UserNotFoundMessage;
+import fr.example.technicaloffer.rest.exception.RestExceptionHandler;
 import fr.example.technicaloffer.service.UserService;
 import reactor.core.publisher.Mono;
 
@@ -44,6 +49,9 @@ public class UserRestControllerTest {
 
 	@Autowired
 	private WebTestClient webClient;
+
+	@SpyBean
+	private RestExceptionHandler restExceptionHandler;
 
 	@Value("${app.api.latest-prefix-endpoint}")
 	private String prefixEndpoint;
@@ -64,13 +72,16 @@ public class UserRestControllerTest {
 	@Test
 	void findUserByUsernameIs404() {
 		ResponseError responseError = new ResponseError(List.of(new ErrorResource(HttpStatus.NOT_FOUND.value(),
-				ErrorType.RESOURCE_NOT_FOUND, UserNotFoundMessage.ERROR_MESSAGE)));
+				ErrorType.RESOURCE_NOT_FOUND, UserNotFoundMessage.USER_NOT_FOUND)));
 		when(userService.findByUsername(ArgumentMatchers.anyString()))
 				.thenReturn(Mono.error(UserNotFoundException::new));
 		webClient.get().uri(uriBuilder -> uriBuilder.path(usersUri()).queryParam(USERNAME, "toto").build()).exchange()
 				.expectStatus().isNotFound().expectBody(ResponseError.class).isEqualTo(responseError);
 
 		Mockito.verify(userService, times(1)).findByUsername(ArgumentMatchers.anyString());
+		Mockito.verify(restExceptionHandler, times(1))
+				.handleUserNotFoundException(ArgumentMatchers.any(UserNotFoundException.class));
+
 	}
 
 	@Test
@@ -81,6 +92,9 @@ public class UserRestControllerTest {
 				.isEqualTo(ErrorType.VALIDATION_ERROR.name());
 
 		Mockito.verify(userService, times(0)).findByUsername(ArgumentMatchers.anyString());
+		Mockito.verify(restExceptionHandler, times(1))
+				.handleConstraintViolationException(ArgumentMatchers.any(ConstraintViolationException.class));
+
 	}
 
 	@Test
@@ -108,6 +122,8 @@ public class UserRestControllerTest {
 				.jsonPath("errors[0].type").isEqualTo(ErrorType.VALIDATION_ERROR.name()).jsonPath("errors[0].message");
 
 		Mockito.verify(userService, times(0)).registerUser(ArgumentMatchers.any());
+		Mockito.verify(restExceptionHandler, times(1))
+				.handleWebExchangeBindException(ArgumentMatchers.any(WebExchangeBindException.class));
 
 	}
 
