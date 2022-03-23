@@ -12,8 +12,8 @@ import fr.example.technicaloffer.constraint.annotation.DateAge;
 
 /**
  * DateAge validator. <br>
- * A {@link LocalDate} must have age between a {@link Age.min()} and
- * {@link Age.max()}
+ * A {@link LocalDate} must have age between a {@link DateAge.minAge()} and
+ * {@link DateAge.maxAge()}
  * 
  * @author saad arkoubi
  *

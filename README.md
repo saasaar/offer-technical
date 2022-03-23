@@ -30,3 +30,9 @@ Application running on port 9090 by default. http://localhost:9090/.
 
 ## Documentation
 The API docs are available on http://localhost:9090/api-docs.html after application startup.
+
+## Roadmap
+
+- [x] Main functionalities
+- [ ] Enhance error messages and Open API documentation 
+- [ ] Code coverage
