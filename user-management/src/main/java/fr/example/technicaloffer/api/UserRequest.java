@@ -4,14 +4,13 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import fr.example.technicaloffer.constraint.annotation.Age;
 import fr.example.technicaloffer.constraint.annotation.Country;
+import fr.example.technicaloffer.constraint.annotation.DateAge;
 import fr.example.technicaloffer.constraint.annotation.Gender;
 import lombok.Builder;
 import lombok.Data;
@@ -32,11 +31,10 @@ public class UserRequest {
 	@Size(max = 255)
 	private String username;
 
-	// TODO Handle Deserialization error and OPEN API doc
+	// TODO Handle Deserialization error
 	@JsonProperty("birth_date")
 	@NotNull(message = "{user.birthdate.notnull.message}")
-	@Past(message = "{user.birthdate.past.message}")
-	@Age(min = 18)
+	@DateAge(minAge = 18)
 	private LocalDate birthDate;
 
 	@Country(CountryEnum.FRANCE)

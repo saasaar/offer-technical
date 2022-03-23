@@ -57,20 +57,17 @@ public class LoggingAspect {
 		try {
 			Object result = joinPoint.proceed();
 			long elapsedTime = System.currentTimeMillis() - startExecution;
-			return logMonoResult((Mono<?>) result, elapsedTime);
+			return (result instanceof Mono<?>) ? ((Mono<?>) result).doOnSuccess(o -> logResult(o, elapsedTime)) : logResult(result, elapsedTime); 
 		} catch (IllegalArgumentException e) {
 			log.error(e.getMessage());
 			throw e;
 		}
 	}
 
-	private <T> Object logMonoResult(Mono<T> monoResult, long elapsedTime) {
-		return monoResult.doOnSuccess(o -> logResult(o, elapsedTime));
-	}
-
-	private void logResult(Object value, long elapsedTime) {
+	private Object logResult(Object value, long elapsedTime) {
 		log.info(new StringBuilder("Return value : ").append(value).append(". ").append("Execution time : ")
 				.append(elapsedTime).append(" ms").toString());
+		return value;
 	}
 
 }

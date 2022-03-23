@@ -1,5 +1,7 @@
 package fr.example.technicaloffer.constraint.validation;
 
+import java.util.Arrays;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -20,8 +22,8 @@ public class GenderValidator implements ConstraintValidator<Gender, String> {
 
 	@Override
 	public boolean isValid(String gender, ConstraintValidatorContext context) {
-		final var stripedGender = gender.strip();
-		return stripedGender.equals(GenderEnum.MAN.name()) || stripedGender.equals(GenderEnum.WOMEN.name());
+		return Arrays.asList(GenderEnum.values()).stream().map(GenderEnum::name)
+				.anyMatch(enumGender -> gender.strip().equals(enumGender));
 	}
 
 }

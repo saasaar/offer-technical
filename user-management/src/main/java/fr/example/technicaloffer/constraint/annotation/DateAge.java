@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import fr.example.technicaloffer.constraint.validation.AgeValidator;
+import fr.example.technicaloffer.constraint.validation.DateAgeValidator;
 
 /**
  * Validate that the age is between min and max included from a
@@ -19,17 +19,17 @@ import fr.example.technicaloffer.constraint.validation.AgeValidator;
  * @author saad arkoubi
  *
  */
-@Constraint(validatedBy = AgeValidator.class)
+@Constraint(validatedBy = DateAgeValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Age {
+public @interface DateAge {
 
-	int min() default 18;
+	int minAge() default 18;
 
-	int max() default 150;
+	int maxAge() default 150;
 
-	String message() default "{user.age.message}";
+	String message() default "{user.birthdate.age.message}";
 
 	Class<?>[] groups() default {};
 

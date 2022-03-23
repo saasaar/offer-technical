@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.example.technicaloffer.api.CountryEnum;
 import fr.example.technicaloffer.api.GenderEnum;
-import fr.example.technicaloffer.constraint.annotation.Age;
+import fr.example.technicaloffer.constraint.annotation.DateAge;
 import fr.example.technicaloffer.constraint.annotation.Country;
 import fr.example.technicaloffer.constraint.annotation.Gender;
 import io.swagger.v3.core.jackson.ModelResolver;
@@ -19,7 +19,7 @@ import io.swagger.v3.oas.models.media.Schema;
 @Configuration
 public class CustomOpenApiValidator extends ModelResolver {
 
-	private final List<Package> allowedPackages = List.of(Age.class.getPackage());
+	private final List<Package> allowedPackages = List.of(DateAge.class.getPackage());
 
 	public CustomOpenApiValidator(ObjectMapper mapper) {
 		super(mapper);
@@ -51,9 +51,9 @@ public class CustomOpenApiValidator extends ModelResolver {
 		if (annotationType.equals(Gender.class)) {
 			ret = GenderEnum.values();
 		}
-		if (annotationType.equals(Age.class)) {
-			Age age = (Age) annotation;
-			return new StringBuilder("Age must be between ").append(age.min()).append(" and ").append(age.max())
+		if (annotationType.equals(DateAge.class)) {
+			DateAge age = (DateAge) annotation;
+			return new StringBuilder("Age must be between ").append(age.minAge()).append(" and ").append(age.maxAge())
 					.toString();
 		}
 		return ret;

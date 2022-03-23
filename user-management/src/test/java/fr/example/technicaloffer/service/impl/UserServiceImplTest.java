@@ -21,7 +21,6 @@ import fr.example.technicaloffer.api.UserRequest;
 import fr.example.technicaloffer.exception.UserNotFoundException;
 import fr.example.technicaloffer.model.User;
 import fr.example.technicaloffer.repository.UserRepository;
-import fr.example.technicaloffer.service.impl.UserServiceImpl;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 

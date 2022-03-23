@@ -8,10 +8,10 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.stereotype.Component;
 
-import fr.example.technicaloffer.constraint.annotation.Age;
+import fr.example.technicaloffer.constraint.annotation.DateAge;
 
 /**
- * Age validator. <br>
+ * DateAge validator. <br>
  * A {@link LocalDate} must have age between a {@link Age.min()} and
  * {@link Age.max()}
  * 
@@ -19,15 +19,15 @@ import fr.example.technicaloffer.constraint.annotation.Age;
  *
  */
 @Component
-public class AgeValidator implements ConstraintValidator<Age, LocalDate> {
+public class DateAgeValidator implements ConstraintValidator<DateAge, LocalDate> {
 
 	private int minAge;
 	private int maxAge;
 
 	@Override
-	public void initialize(Age age) {
-		minAge = age.min();
-		maxAge = age.max();
+	public void initialize(DateAge age) {
+		minAge = age.minAge();
+		maxAge = age.maxAge();
 	}
 
 	@Override
